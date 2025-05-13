@@ -1,0 +1,12 @@
+{
+  "name": "projekt",
+  "version": "1.0.0",
+  "description": "\"# projekt_mobilne\"",
+  "main": "service-worker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
