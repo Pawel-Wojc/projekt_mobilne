@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moja aplikacja PWA</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="manifest" href="./manifest.json">
+</head>
+<body>
+    <div id="registrationForm">
+        <h1>Rejestracja nowego użytkownika / Logowanie</h1>
+        <input type="text" id="username" placeholder="Nazwa użytkownika">
+        <input type="password" id="password" placeholder="Hasło">
+        <button id="registerButton" onclick="registerUser()">Zarejestruj</button>
+        <button id="loginButton" onclick="loginUser()">Zaloguj</button>
+    </div>
+
+    <script src="./script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(function() {
+                    console.log('Service Worker zarejestrowany poprawnie.');
+                })
+                .catch(function(error) {
+                    console.error('Błąd podczas rejestracji Service Workera:', error);
+                });
+        }
+    </script>
+</body>
+</html>
