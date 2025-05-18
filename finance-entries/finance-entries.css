@@ -1,0 +1,153 @@
+body {
+    padding: 2%;
+    font-family: "Segoe UI";
+}
+
+main, header {
+    margin: auto;
+    width: 90%;
+    max-width: 800px;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+}
+
+header h1 {
+    margin: auto;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#new-entry-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    padding: 8px 0;
+}
+
+#new-entry-container .row {
+    display: flex;
+    width: 100%;
+    height: auto;
+    min-height: 38px;
+    gap: 8px;
+    margin-bottom: 12px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+#new-entry-container .row #entry-desc-input {
+    width: 100%;
+    height: 36px;
+    font-size: 0.95rem;
+    padding: 6px 8px;
+}
+
+#new-entry-container .row #entry-type-input {
+    width: 20%;
+    min-width: 60px;
+    height: 36px;
+}
+
+#new-entry-container .row #entry-value-input {
+    width: calc(80% - 8px);
+    height: 36px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    text-align: right;
+    padding: 6px 8px;
+}
+
+#new-entry-container .row #entry-type-icon {
+    font-size: 1.3rem;
+}
+
+@media (min-width: 768px) {
+    #new-entry-container {
+        max-width: 300px;
+        padding: 4px 0;
+    }
+    
+    #new-entry-container .row {
+        margin-bottom: 8px;
+        gap: 6px;
+        min-height: 32px;
+    }
+    
+    #new-entry-container .row #entry-desc-input {
+        height: 32px;
+        font-size: 1rem;
+        padding: 4px 6px;
+    }
+
+    #new-entry-container .row #entry-type-input {
+        height: 32px;
+        font-size: 1rem;
+        padding: 4px 6px;
+    }
+
+    #new-entry-container .row #entry-value-input {
+        height: 32px;
+        font-size: 1.5rem;
+        padding: 4px 6px;
+    }
+    
+    #new-entry-container .row #entry-type-icon {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 400px) {
+    main, header {
+        width: 95%;
+    }
+}
+
+.green {
+    background: linear-gradient(rgb(50, 168, 82), rgb(50, 227, 98));
+}
+
+.red {
+    background: linear-gradient(rgb(163, 10, 25), rgb(209, 44, 60));
+}
+
+#entry-history-container { 
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    flex-direction: column;
+    gap: 1%;
+}
+
+.entry {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    width: 80%;
+    height: 1rem;
+    padding: 5%;
+}
+
+.entry .entry-date {
+    text-align: right;
+    height: 10%;
+}
+
+.entry .entry-details {
+    height: 90%;
+    display: flex;
+    flex-direction: row;
+}
