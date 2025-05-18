@@ -11,7 +11,7 @@ const PORT = 3000;
 app.use(cors());
 
 // read config
-const CONFIG = require('./config.json');
+const CONFIG = require('../config.json');
 
 // Połączenie z bazą danych MongoDB
 mongoose.connect(CONFIG.mongoDB, {
