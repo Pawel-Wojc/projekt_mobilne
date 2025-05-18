@@ -51,7 +51,7 @@ const presentRecords = (records) => {
     for (record of records) {
         builder += 
             `<div class="entry ${record.value > 0 ? "green" : "red"}">
-                <p class="entry-date">${record.date}</p>
+                <p class="entry-date">${formatDate(record.date)}</p>
                 <div class="entry-details">
                     <h2>${record.value.toFixed(2)}</h2>
                     <span>${record.desc}</span>
@@ -59,6 +59,14 @@ const presentRecords = (records) => {
             </div>`
     }
     HISTORY_CONTAINER.innerHTML = builder;
+}
+
+const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+  
+    return `${year}-${month}-${day}`;
 }
 
 const demo = () => {
