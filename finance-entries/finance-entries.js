@@ -3,6 +3,7 @@ const ALLOWED_NUMBER_INPUT_CHARS = ['0', '1', '2', '3', '4', '5', '6', '7', '8',
 const VALUE_INPUT = document.getElementById("entry-value-input");
 const TYPE_ICON = document.getElementById("entry-type-icon");
 const HISTORY_CONTAINER = document.getElementById("entry-history-container")
+const API_URL = "TODO"
 let newEntryIsPlus = true;
 
 const isInputValid = (char) => {
@@ -62,6 +63,28 @@ const formatDate = (date) => {
     const day = String(dateObj.getDate()).padStart(2, '0');
   
     return `${year}-${month}-${day}`;
+}
+
+const fetchEntries = async (userId, page) => {
+    try {
+        const response = await fetch(`${API_URL}?userId=${userId}&page=${page}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+
+        const data = await response.json();
+        presentRecords(data.records);
+    } catch (error) {
+        console.error("Błąd wczytywania historii transakcji", error);
+        alert("Błąd wczytywania historii transakcji")
+    }
 }
 
 const demo = () => {
