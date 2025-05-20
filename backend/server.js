@@ -93,8 +93,8 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-app.get('/api/summary', async (req, res) => {
-    currentUser = localStorage.getItem('currentUser');
+app.get('/api/summary/:currentUser', async (req, res) => {
+    const currentUser = req.params.currentUser;
     if (!currentUser) {
         return res.status(401).json({ message: 'Nieautoryzowany dostęp' });
     }
