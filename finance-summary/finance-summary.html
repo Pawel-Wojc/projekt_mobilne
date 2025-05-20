@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Finanse</title>
+        <link rel="stylesheet" href="./finance-summary.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <link rel="manifest" href="/../manifest.json" />
+    </head>
+    <body>
+        <header>
+            <h1>Analiza finansów</h1>
+        </header>
+        <main>
+            <section id="range-change-container">
+                <div class="row">
+                    <button type="button" class="button" id="week-button" onclick="handleWeekClick()">
+                        Tygodniowo
+                    </button>
+                    <button type="button" class="button" id="month-button" onclick="handleMonthClick()">
+                        Miesięcznie
+                    </button>
+
+                    <button type="button" class="button" id="year-button" onclick="handleYearClick()">Rocznie</button>
+                </div>
+            </section>
+            <section id="summary-container">
+                <div id="summary-navigation">
+                    <button id="left" onclick="handleDateBack()">&lt;</button>
+                    <div id="date">Data</div>
+                    <button id="right" onclick="handleDateForward()">&gt;</button>
+                </div>
+                <div id="summary-total">Suma : -200</div>
+                <div id="summary-list"></div>
+            </section>
+        </main>
+        <script src="./finance-summary.js"></script>
+    </body>
+</html>
