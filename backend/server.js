@@ -34,8 +34,8 @@ const userSchema = new mongoose.Schema({
 const transactionSchema = new mongoose.Schema({
     userId: String,
     date: Date,
-    amount: Number,
-    description: String,
+    value: Number,
+    desc: String,
 });
 
 const User = mongoose.model('User', userSchema);
