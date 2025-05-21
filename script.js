@@ -1,6 +1,6 @@
 const registerUser = async () => {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
     try {
         const response = await fetch('http://localhost:3000/api/register', {
@@ -8,7 +8,7 @@ const registerUser = async () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username, password }),
         });
 
         if (!response.ok) {
@@ -23,16 +23,16 @@ const registerUser = async () => {
 };
 
 const loginUser = async () => {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
     try {
         const response = await fetch('http://localhost:3000/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'username': username,
-                'password': password
+                username: username,
+                password: password,
             },
         });
 
@@ -42,15 +42,16 @@ const loginUser = async () => {
         }
 
         const data = await response.json();
-        localStorage.setItem("myKey", data.message);
+        localStorage.setItem('myKey', data.message);
+        window.location.href = '../finance-entries/finance-entries.html';
     } catch (error) {
         console.error('Błąd podczas tworzenia użytkownika:', error);
     }
 };
 
-const isLoggedIn = () =>{
-    return localStorage.getItem("myKey"); 
-}
+const isLoggedIn = () => {
+    return localStorage.getItem('myKey');
+};
 
 // Sprawdź stan zalogowania przy załadowaniu strony
 window.onload = () => {
