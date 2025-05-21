@@ -93,14 +93,14 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-app.get('/api/summary/:currentUser', async (req, res) => {
-    const currentUser = req.params.currentUser;
-    if (!currentUser) {
+app.get('/api/summary', async (req, res) => {
+    const userKey = req.query.userKey;
+    if (!userKey) {
         return res.status(401).json({ message: 'Nieautoryzowany dostęp' });
     }
 
     try {
-        const userRecords = await FinanceRecord.find({ userId: currentUser });
+        const userRecords = await FinanceRecord.find({ userId: userKey });
         res.status(200).json(userRecords);
     } catch (error) {
         console.error('Błąd podczas pobierania podsumowania:', error);
