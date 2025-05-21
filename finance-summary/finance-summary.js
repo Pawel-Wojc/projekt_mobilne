@@ -21,7 +21,7 @@ let currentViewState;
 const monthButton = document.getElementById('month-button');
 const weekButton = document.getElementById('week-button');
 const yearButton = document.getElementById('year-button');
-
+getDataFromApi();
 updateStartEndDate = () => {
     switch (currentViewState) {
         case ViewState.WEEK:
@@ -50,7 +50,8 @@ updateStartEndDate = () => {
 };
 
 getDataFromApi = () => {
-    fetch('http://localhost:3000/summary')
+    const userKey = localStorage.getItem('myKey');
+    fetch(`http://localhost:3000/summary?userKey=${userKey}`)
         .then((response) => response.json())
         .then((data) => {
             financeRecords = data;
