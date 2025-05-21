@@ -42,10 +42,13 @@ const loginUser = async () => {
         }
 
         const data = await response.json();
-        localStorage.setItem("myKey", data.message);
+        localStorage.setItem("userId", data.message);
+        getPermisionAndRegisterUser();
+        
     } catch (error) {
         console.error('Błąd podczas tworzenia użytkownika:', error);
     }
+    
 };
 
 const isLoggedIn = () =>{
@@ -56,9 +59,9 @@ const isLoggedIn = () =>{
 window.onload = () => {
     if (isLoggedIn()) {
         console.log('LoggedIn');
-        showDashboard();
+      //  showDashboard();
     } else {
         console.log('not LoggedIn');
-        showLoginPage();
+      // showLoginPage();
     }
 };

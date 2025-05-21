@@ -82,7 +82,7 @@ app.post('/api/login', async (req, res) => {
 
     try {
         const existingUser = await User.findOne({ username });
-        if (existingUser.password !== password) {
+        if (!existingUser || existingUser.password !== password) {
             return res.status(400).json({ message: 'Błędne dane logowania' });
         }
 
@@ -90,6 +90,55 @@ app.post('/api/login', async (req, res) => {
     } catch (error) {
         console.error('Błąd podczas logowania:', error);
         res.status(500).json({ message: 'Wystąpił błąd podczas logowania.' });
+    }
+});
+
+// save  users push subscription
+app.post('/api/save-push-sub', async(req, res) =>{
+    const userId = req.get('userId');
+    const { endpoint, keys } = req.body;
+    console.log('User ID:', userId);
+    console.log('Endpoint:', endpoint);
+    console.log('Auth:', keys
+    );
+    console.log('p256dh:', keys?.p256dh);
+    try {
+        let pushSub = await PushSubscription.findOne({userId}); 
+        
+        if(pushSub){
+            await PushSubscription.deleteOne({userId}); 
+        }
+        
+        const userSub = new PushSubscription({ 
+            userId, 
+            subscription: {
+                endpoint,
+                keys
+            }
+        });
+
+        await userSub.save();
+        res.status(201).json({ message: 'Subskrypcja zapisana.' });
+    } catch (error) {
+        console.error('Błąd podczas zapisywania subskrypcji push', error);
+        res.status(500).json({ message: 'Wystąpił błąd podczas zapisywania subskrypcji push.' });
+    }
+});
+
+app.get('/api/summary/:currentUser', async (req, res) => {
+    const currentUser = req.params.currentUser;
+    if (!currentUser) {
+        return res.status(401).json({ message: 'Nieautoryzowany dostęp' });
+    }
+
+    try {
+        const userRecords = await FinanceRecord.find({ userId: currentUser });
+        res.status(200).json(userRecords);
+    } catch (error) {
+        console.error('Błąd podczas pobierania podsumowania:', error);
+        res.status(500).json({
+            message: 'Wystąpił błąd podczas pobierania podsumowania.',
+        });
     }
 });
 

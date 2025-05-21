@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moja aplikacja PWA</title>
-    <link rel="stylesheet" href="./style.css">
     <link rel="manifest" href="./manifest.json">
 </head>
 <body>
@@ -16,6 +15,7 @@
         <button id="loginButton" onclick="loginUser()">Zaloguj</button>
     </div>
 
+    <script src="./push.js"></script>
     <script src="./script.js"></script>
     <script>
         if ('serviceWorker' in navigator) {

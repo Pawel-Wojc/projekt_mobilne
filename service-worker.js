@@ -17,7 +17,7 @@ self.addEventListener("activate", event => {
 
 
 self.addEventListener('push', function(event) {
-    const data = event.data.json();  // Assuming the server sends JSON
+    const data = event.data.json();  
     const options = {
         body: data.body,
     //    icon: 'icon.png',
