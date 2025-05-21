@@ -110,6 +110,28 @@ app.get('/api/summary', async (req, res) => {
     }
 });
 
+app.post('/api/summary', async (req, res) => {
+    const { userId, date, value, desc } = req.body;
+    if (!userId || !date || !value) {
+        return res.status(400).json({ message: 'Niepełne dane' });
+    }
+    try {
+        const newRecord = new FinanceRecord({
+            userId,
+            date: new Date(date),
+            value,
+            desc,
+        });
+        await newRecord.save();
+        res.status(201).json({ message: 'Dodano nowy rekord finansowy.' });
+    } catch (error) {
+        console.error('Błąd podczas dodawania rekordu:', error);
+        res.status(500).json({
+            message: 'Wystąpił błąd podczas dodawania rekordu.',
+        });
+    }
+});
+
 // Start serwera
 app.listen(PORT, () => {
     // console.log(`process.env.PORT: ${process.env.PORT}`);
