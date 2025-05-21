@@ -72,8 +72,7 @@ app.post('/api/register', async (req, res) => {
 });
 
 app.post('/api/login', async (req, res) => {
-    let username = req.get('username');
-    let password = req.get('password');
+    let { username, password } = req.body;
     // hashing password
     password = crypto
         .createHash('sha256', password)
@@ -82,13 +81,14 @@ app.post('/api/login', async (req, res) => {
 
     try {
         const existingUser = await User.findOne({ username });
-        if (existingUser.password !== password) {
+        if (!existingUser || existingUser.password !== password) {
             return res.status(400).json({ message: 'Błędne dane logowania' });
         }
 
         res.status(202).json({ message: existingUser._id.toString() });
     } catch (error) {
         console.error('Błąd podczas logowania:', error);
+        console.log(username);
         res.status(500).json({ message: 'Wystąpił błąd podczas logowania.' });
     }
 });
@@ -106,6 +106,27 @@ app.get('/api/summary/:currentUser', async (req, res) => {
         console.error('Błąd podczas pobierania podsumowania:', error);
         res.status(500).json({
             message: 'Wystąpił błąd podczas pobierania podsumowania.',
+        });
+    }
+});
+
+app.get('/api/checkAuth', async (req, res) => {
+    try {
+        console.log(req.params);
+        const userKey = req.query.userKey;
+        if (!userKey) {
+            return res.status(401).json({ message: 'Nieautoryzowany dostęp' });
+        }
+        const user = await User.findById(userKey);
+        if (!user) {
+            return res.status(401).json({ message: 'Nieautoryzowany dostęp' });
+        }
+        res.status(200).json({ message: 'Zalogowany' });
+    } catch (error) {
+        console.log(req.params);
+        console.error('Błąd podczas sprawdzania statusu logowania:', error);
+        res.status(401).json({
+            message: 'Wystąpił błąd podczas sprawdzania statusu logowania.',
         });
     }
 });

@@ -1,33 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Finanse</title>
-    <link rel="stylesheet" href="./finance-entries.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <link rel="manifest" href="/../manifest.json"/>
-</head>
-<body>
-    <header>
-        <h1>Historia finansów</h1>
-    </header>
-    <main>
-        <section id="new-entry-container">
-            <div class="row">
-                <input type="text" placeholder="Opis transakcji.." id="entry-desc-input">
-            </div>
-            <div class="row">
-                <button type="button" id="entry-type-input" onclick="handleTypeClick()">
-                    <i id="entry-type-icon" class="fa-solid fa-plus"></i>
-                </button>
-                <input type="text" onkeypress="return isInputValid(event.key)" placeholder="21,37.." id="entry-value-input">
-            </div>
-        </section>
-        <section id="entry-history-container">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Finanse</title>
+        <link rel="stylesheet" href="./finance-entries.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <link rel="manifest" href="/../manifest.json" />
 
-        </section>
-    </main>
-    <script src="./finance-entries.js"></script>
-</body>
+        <style>
+            body {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <script type="module">
+            import { checkLoginStatus } from '../authorization.js';
+
+            const isLoggedIn = await checkLoginStatus();
+            console.log('isLoggedIn:', isLoggedIn);
+            if (!isLoggedIn) {
+                window.location.href = '../index.html';
+            } else {
+                document.body.style.display = 'block';
+            }
+        </script>
+        <a href="../finance-summary/finance-summary.html">Podsumowanie</a>
+        <header>
+            <h1>Historia finansów</h1>
+        </header>
+        <main>
+            <section id="new-entry-container">
+                <div class="row">
+                    <input
+                        type="text"
+                        placeholder="Opis transakcji.."
+                        id="entry-desc-input"
+                    />
+                </div>
+                <div class="row">
+                    <button
+                        type="button"
+                        id="entry-type-input"
+                        onclick="handleTypeClick()"
+                    >
+                        <i id="entry-type-icon" class="fa-solid fa-plus"></i>
+                    </button>
+                    <input
+                        type="text"
+                        onkeypress="return isInputValid(event.key)"
+                        placeholder="21,37.."
+                        id="entry-value-input"
+                    />
+                </div>
+            </section>
+            <section id="entry-history-container"></section>
+        </main>
+        <script src="./finance-entries.js"></script>
+    </body>
 </html>
