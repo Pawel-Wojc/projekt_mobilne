@@ -37,7 +37,18 @@ const transactionSchema = new mongoose.Schema({
     value: Number,
     desc: String,
 });
-
+// Def user subscription for push msg
+const pushSubscriptionSchema = new mongoose.Schema({
+    userId: String,
+    subscription: {
+        endpoint: String,
+        keys: {
+            auth: String,
+            p256dh: String
+        }
+    }
+});
+const PushSubscription = mongoose.model('pushSubscription', pushSubscriptionSchema);
 const User = mongoose.model('User', userSchema);
 const FinanceRecord = mongoose.model('FinanceRecord', transactionSchema);
 
