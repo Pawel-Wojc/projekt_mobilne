@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const crypto = require('crypto');
-
+const webPush = require('web-push');
 const app = express();
 const PORT = 3000;
 
@@ -173,6 +173,21 @@ app.post('/api/save-push-sub', async(req, res) =>{
         console.error('Błąd podczas zapisywania subskrypcji push', error);
         res.status(500).json({ message: 'Wystąpił błąd podczas zapisywania subskrypcji push.' });
     }
+});
+
+app.get('/send/push', async(req, res) =>{
+    const userId = '6828bb643b7ac99f5ff4a338';
+    let pushSub = await PushSubscription.findOne({userId}); 
+    const pushSubscription = pushSub.subscription;
+    webPush.setVapidDetails(
+    'https://yourdomain.org',  // Using a URL instead of mailto
+    vapidKeys.publicKey,
+    vapidKeys.privateKey
+    );
+    const payload = JSON.stringify({ title: 'Hello!', body: 'Hello, world!' });
+    webPush.sendNotification(pushSubscription, payload)
+    .then(result => console.log('Push sent:', result))
+    .catch(err => console.error('Error sending push:', err));
 });
 
 // Start serwera
