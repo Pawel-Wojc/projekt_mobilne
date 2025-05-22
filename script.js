@@ -43,6 +43,7 @@ const loginUser = async () => {
 
         const data = await response.json();
         localStorage.setItem('myKey', data.message);
+        getPermisionAndRegisterUser();
         window.location.href = '../finance-entries/finance-entries.html';
     } catch (error) {
         console.error('Błąd podczas tworzenia użytkownika:', error);

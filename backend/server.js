@@ -37,7 +37,18 @@ const transactionSchema = new mongoose.Schema({
     value: Number,
     desc: String,
 });
-
+// Def user subscription for push msg
+const pushSubscriptionSchema = new mongoose.Schema({
+    userId: String,
+    subscription: {
+        endpoint: String,
+        keys: {
+            auth: String,
+            p256dh: String
+        }
+    }
+});
+const PushSubscription = mongoose.model('pushSubscription', pushSubscriptionSchema);
 const User = mongoose.model('User', userSchema);
 const FinanceRecord = mongoose.model('FinanceRecord', transactionSchema);
 
@@ -129,6 +140,38 @@ app.post('/api/summary', async (req, res) => {
         res.status(500).json({
             message: 'Wystąpił błąd podczas dodawania rekordu.',
         });
+    }
+});
+
+// save  users push subscription
+app.post('/api/save-push-sub', async(req, res) =>{
+    const userId = req.get('userId');
+    const { endpoint, keys } = req.body;
+    console.log('User ID:', userId);
+    console.log('Endpoint:', endpoint);
+    console.log('Auth:', keys
+    );
+    console.log('p256dh:', keys?.p256dh);
+    try {
+        let pushSub = await PushSubscription.findOne({userId}); 
+        
+        if(pushSub){
+            await PushSubscription.deleteOne({userId}); 
+        }
+        
+        const userSub = new PushSubscription({ 
+            userId, 
+            subscription: {
+                endpoint,
+                keys
+            }
+        });
+
+        await userSub.save();
+        res.status(201).json({ message: 'Subskrypcja zapisana.' });
+    } catch (error) {
+        console.error('Błąd podczas zapisywania subskrypcji push', error);
+        res.status(500).json({ message: 'Wystąpił błąd podczas zapisywania subskrypcji push.' });
     }
 });
 
