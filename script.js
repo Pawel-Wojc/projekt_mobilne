@@ -42,7 +42,7 @@ const loginUser = async () => {
         }
 
         const data = await response.json();
-        localStorage.setItem('myKey', data.message);
+        localStorage.setItem('userId', data.message);
         getPermisionAndRegisterUser();
         window.location.href = '../finance-entries/finance-entries.html';
     } catch (error) {
@@ -51,16 +51,16 @@ const loginUser = async () => {
 };
 
 const isLoggedIn = () => {
-    return localStorage.getItem('myKey');
+    return localStorage.getItem('userId');
 };
 
 // Sprawdź stan zalogowania przy załadowaniu strony
 window.onload = () => {
     if (isLoggedIn()) {
         console.log('LoggedIn');
-        showDashboard();
+     //   showDashboard();
     } else {
         console.log('not LoggedIn');
-        showLoginPage();
+     //   showLoginPage();
     }
 };
