@@ -42,11 +42,12 @@ const loginUser = async () => {
         }
 
         const data = await response.json();
-        localStorage.setItem('userId', data.message);
+        console.log('response', data);
+        localStorage.setItem('myKey', data.message);
         getPermisionAndRegisterUser();
         window.location.href = '../finance-entries/finance-entries.html';
     } catch (error) {
-        console.error('Błąd podczas tworzenia użytkownika:', error);
+        console.error('Błąd podczas logowania użytkownika:', error);
     }
 };
 
@@ -58,9 +59,9 @@ const isLoggedIn = () => {
 window.onload = () => {
     if (isLoggedIn()) {
         console.log('LoggedIn');
-     //   showDashboard();
+        //   showDashboard();
     } else {
         console.log('not LoggedIn');
-     //   showLoginPage();
+        //showLoginPage();
     }
 };

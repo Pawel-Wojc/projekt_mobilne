@@ -21,7 +21,36 @@ let currentViewState;
 const monthButton = document.getElementById('month-button');
 const weekButton = document.getElementById('week-button');
 const yearButton = document.getElementById('year-button');
-getDataFromApi();
+
+const requestOptions = {
+    method: 'GET',
+    redirect: 'follow',
+};
+
+fetch(
+    'http://localhost:3000/api/summary?userKey=682e27e737f4a331d2c4ea4f',
+    requestOptions
+)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error));
+
+const getSummaryFromApi = async () => {
+    const userKey = localStorage.getItem('myKey');
+    try {
+        fetch(`http://localhost:3000/api/summary?userKey=${userKey}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then((result) => {
+            console.log(result);
+        });
+    } catch (error) {
+        console.error('Błąd podczas pobierania podsumowania:', error);
+    }
+};
+getSummaryFromApi();
 updateStartEndDate = () => {
     switch (currentViewState) {
         case ViewState.WEEK:
