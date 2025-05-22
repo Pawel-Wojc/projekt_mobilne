@@ -1,0 +1,104 @@
+:root {
+    --primary-color: #4361ee;
+    --income-color: #4cc9f0;
+    --expense-color: #f72585;
+    --active-color: #a41455;
+    --background-color: #f8f9fa;
+    --text-color: #212529;
+    --light-gray: #e9ecef;
+    --medium-gray: #adb5bd;
+    --dark-gray: #495057;
+    --white: #ffffff;
+    --border-radius: 8px;
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+}
+body {
+    padding: 1rem;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.5;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+header {
+    margin: 1rem auto 2rem;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    padding: 0 1rem;
+}
+
+header h1 {
+    margin: 0;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    color: var(--primary-color);
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+main {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+button {
+    min-width: 3.5rem;
+    height: 3.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--expense-color);
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background-color 0.2s;
+    flex-shrink: 0;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+.active {
+    background-color: var(--active-color);
+}
+
+.input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid var(--light-gray);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+#login-container {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: left;
+    margin-top: 1rem;
+}

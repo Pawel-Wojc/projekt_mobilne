@@ -21,16 +21,36 @@
                     '../finance-entries/finance-entries.html';
             }
         </script>
-        <div id="registrationForm">
-            <h1>Rejestracja nowego użytkownika / Logowanie</h1>
-            <input type="text" id="username" placeholder="Nazwa użytkownika" />
-            <input type="password" id="password" placeholder="Hasło" />
-            <button id="registerButton" onclick="registerUser()">
-                Zarejestruj
-            </button>
-            <button id="loginButton" onclick="loginUser()">Zaloguj</button>
-        </div>
-
+        <header>
+            <h1>Zaloguj się aby sprawdzić finanse</h1>
+        </header>
+        <main>
+            <section id="login-container">
+                <div id="registrationForm">
+                    <h1>Rejestracja nowego użytkownika / Logowanie</h1>
+                    <input
+                        class="input"
+                        type="text"
+                        id="username"
+                        placeholder="Nazwa użytkownika"
+                    />
+                    <input
+                        type="password"
+                        id="password"
+                        class="input"
+                        placeholder="Hasło"
+                    />
+                    <div class="buttons">
+                        <button id="registerButton" onclick="registerUser()">
+                            Zarejestruj
+                        </button>
+                        <button id="loginButton" onclick="loginUser()">
+                            Zaloguj
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
         <script src="./script.js"></script>
         <script>
             if ('serviceWorker' in navigator) {
