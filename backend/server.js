@@ -186,8 +186,8 @@ app.get('/send/push', async(req, res) =>{
     const pushSubscription = pushSub.subscription;
     webPush.setVapidDetails(
     'https://yourdomain.org',  // Using a URL instead of mailto
-    vapidKeys.publicKey,
-    vapidKeys.privateKey
+    CONFIG.VAPID_public_key,
+    CONFIG.VAPID_private_key
     );
     const payload = JSON.stringify({ title: 'Hello!', body: 'Hello, world!' });
     webPush.sendNotification(pushSubscription, payload)

@@ -13,7 +13,7 @@ const getPermisionAndRegisterUser = () => {
                             registration.pushManager
                                 .subscribe({
                                     userVisibleOnly: true,
-                                    applicationServerKey: urlB64ToUint8Array(
+                                    applicationServerKey: urlBase64ToUint8Array(
                                         'BFISZ7kmZ3UsRZvax9oZWsvr48z-HOWz-pclsZnl_WYAhuL8eDLu7aoMzfdvLEs3-UdI2dIFPYC8oWoLpzDTXm4'
                                     ),
                                 })
