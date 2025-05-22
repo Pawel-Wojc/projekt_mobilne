@@ -1,0 +1,22 @@
+{
+    "name": "Budget Tracking App",
+    "description": "Financial App",
+    "start_url": "/",
+    "lang": "en",
+    "theme_color": "#f8f9fa",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "icon192x192.png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "icon512x512.png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "icon.svg",
+            "sizes": "800x800"
+        }
+    ]
+}
