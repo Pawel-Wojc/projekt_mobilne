@@ -1,4 +1,4 @@
-
+const API_URL = "https://projekt-mobilne.onrender.com/api";
 
 startDate = new Date();
 endDate = new Date();
@@ -21,7 +21,7 @@ const yearButton = document.getElementById('year-button');
 const getSummaryFromApi = async () => {
     const userKey = localStorage.getItem('myKey');
     try {
-        fetch(`http://localhost:3000/api/summary?userKey=${userKey}`, {
+        fetch(`${API_URL}/summary?userKey=${userKey}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

@@ -5,7 +5,6 @@ const HISTORY_CONTAINER = document.getElementById("entry-history-container");
 const DESC_INPUT = document.getElementById("entry-desc-input");
 const SCROLL_TRIGGER = document.getElementById("scroll-trigger");
 const USER_ID = localStorage.getItem("myKey");
-const API_URL = "http://localhost:3000";
 let loadedEntries = [];
 let currentPage = 1;
 let totalPages = null;
@@ -63,7 +62,7 @@ const createNewRecord = async () => {
     }
 
     try {
-        const response = await fetch(`${API_URL}/api/addRecord`, {
+        const response = await fetch(`${API_URL}/addRecord`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -114,7 +113,7 @@ const fetchEntries = async () => {
         return;
     }
     try {
-        const response = await fetch(`${API_URL}/api/get-trasnactions?userId=${USER_ID}&page=${currentPage}`, {
+        const response = await fetch(`${API_URL}/get-trasnactions?userId=${USER_ID}&page=${currentPage}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"

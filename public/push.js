@@ -1,5 +1,6 @@
 // read config
 //const CONFIG = require('./config.json');
+const API_URL = "https://projekt-mobilne.onrender.com/api";
 
 const getPermisionAndRegisterUser = () => {
     Notification.requestPermission().then((permission) => {
@@ -56,7 +57,7 @@ const sendToAPI = async (subscription) => {
     console.log('p256dh ' + subscription.getKey('p256dh'));
     try {
         const response = await fetch(
-            'http://localhost:3000/api/save-push-sub',
+            `${API_URL}/save-push-sub`,
             {
                 method: 'POST',
                 headers: {
