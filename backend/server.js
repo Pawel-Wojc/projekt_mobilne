@@ -116,7 +116,7 @@ app.get('/api/summary', async (req, res) => {
     }
 
     try {
-        const userRecords = await FinanceRecord.find({ userId: userKey });
+        const userRecords = await FinanceRecord.find({ userId: userKey }).sort({ date: -1 });
         res.status(200).json(userRecords);
     } catch (error) {
         console.error('Błąd podczas pobierania podsumowania:', error);
