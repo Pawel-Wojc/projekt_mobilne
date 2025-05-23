@@ -1,5 +1,3 @@
-// read config
-//const CONFIG = require('./config.json');
 const API_URL = "https://projekt-mobilne.onrender.com/api";
 
 const getPermisionAndRegisterUser = () => {

@@ -153,3 +153,5 @@ const observer = new IntersectionObserver((entries) => {
 if (SCROLL_TRIGGER) {
     observer.observe(SCROLL_TRIGGER);
 }
+
+getPermisionAndRegisterUser();
