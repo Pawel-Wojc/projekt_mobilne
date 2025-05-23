@@ -96,7 +96,7 @@ main {
   box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
 }
 
-#entry-type-input, button {
+#entry-add-button {
   min-width: 3.5rem;
   height: 3.5rem;
   border: none;
@@ -112,18 +112,11 @@ main {
   flex-shrink: 0;
 }
 
-#entry-type-input:hover , button:hover {
+#entry-add-button:hover {
   transform: scale(1.05);
 }
 
-.green {
-    color: green;
-}
-.red {
-    color: red;
-}
-
-#entry-type-input.income {
+#entry-add-button.income {
   background-color: var(--income-color);
 }
 
@@ -255,11 +248,11 @@ main {
     flex-direction: column;
   }
   
-  #entry-type-input, #entry-value-input {
+  #entry-add-button, #entry-value-input {
     width: 100%;
   }
   
-  #entry-type-input {
+  #entry-add-button {
     height: 3rem;
     width: 100%;
     margin-bottom: 0.5rem;

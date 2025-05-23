@@ -48,8 +48,8 @@
                 <div class="row">
                     <button
                         type="button"
-                        id="entry-type-input"
-                        onclick="handleTypeClick()"
+                        id="entry-add-button"
+                        onclick="addRecord()"
                     >
                         <i id="entry-type-icon" class="fa-solid fa-plus"></i>
                     </button>
@@ -62,6 +62,7 @@
                 </div>
             </section>
             <section id="entry-history-container"></section>
+            <div id="scroll-trigger"></div>
         </main>
         <script src="./push.js"></script>
         <script src="./finance-entries.js"></script>

@@ -1,49 +1,93 @@
 const SEPARATOR = (1.1).toLocaleString().charAt(1);
-const ALLOWED_NUMBER_INPUT_CHARS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', SEPARATOR];
+const ALLOWED_NUMBER_INPUT_CHARS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', SEPARATOR, '-'];
 const VALUE_INPUT = document.getElementById("entry-value-input");
-const TYPE_ICON = document.getElementById("entry-type-icon");
-const HISTORY_CONTAINER = document.getElementById("entry-history-container")
-const API_URL = "TODO"
-let newEntryIsPlus = true;
+const HISTORY_CONTAINER = document.getElementById("entry-history-container");
+const DESC_INPUT = document.getElementById("entry-desc-input");
+const SCROLL_TRIGGER = document.getElementById("scroll-trigger");
+const USER_ID = localStorage.getItem("myKey");
+const API_URL = "http://localhost:3000";
+let loadedEntries = [];
+let currentPage = 1;
+let totalPages = null;
+let entries = [];
 
 const isInputValid = (char) => {
+    const value = VALUE_INPUT.value;
+    const selectionStart = VALUE_INPUT.selectionStart;
+    const selectionEnd = VALUE_INPUT.selectionEnd;
+    
     if (!ALLOWED_NUMBER_INPUT_CHARS.includes(char)) return false;
     
-    let decimalPointIndex = null;
-    const value = VALUE_INPUT.value;
-    if (parseFloat(value + char) > Number.MAX_VALUE) return false;
-
-    for (let i = 0; i < value.length; i++) {
-        if (value.charAt(i) === SEPARATOR) {
-            if (decimalPointIndex !== null) return false;
-            decimalPointIndex = i;
-        }
+    if (char === '-') {
+        return selectionStart === 0 && !value.includes('-');
     }
-
+    
     if (char === SEPARATOR) {
-        if (decimalPointIndex !== null) return false;
-        if (!value) return false;
+        const hasSeparator = value.includes(SEPARATOR);
+        const isAfterMinus = value.startsWith('-') && selectionStart === 1;
+        
+        return !hasSeparator && 
+               (selectionStart !== 0 || isAfterMinus) &&
+               (selectionStart !== value.length || value.length > 0);
     }
-    if (decimalPointIndex === 0) return false;
-
-    return true;
+    
+    const newValue = value.slice(0, selectionStart) + char + value.slice(selectionEnd);
+    if (newValue === '-' || newValue === '-' + SEPARATOR) return true;
+    
+    const numberValue = parseFloat(newValue.replace(SEPARATOR, '.'));
+    if (isNaN(numberValue)) return false;
+    
+    return Math.abs(numberValue) <= Number.MAX_VALUE;
 }
 
-const parseInput = () => {
+const parseValueInput = () => {
     return parseFloat(VALUE_INPUT.value.replace(SEPARATOR, '.'));
 }
 
-const handleTypeClick = () => {
-    newEntryIsPlus = !newEntryIsPlus;
-    if (newEntryIsPlus)
-        TYPE_ICON.classList.replace("fa-minus", "fa-plus");
-    else
-        TYPE_ICON.classList.replace("fa-plus", "fa-minus");
+const addRecord = async () => {
+    try {
+        await createNewRecord();
+        presentRecords(loadedEntries);
+        DESC_INPUT.value = "";
+        VALUE_INPUT.value = "";
+    }
+    catch (ex) {} // already caught
 }
 
-const presentRecords = (records) => {
+const createNewRecord = async () => {
+    const newRecord = {
+        userId: USER_ID,
+        date: Date.now(),
+        value: parseValueInput(),
+        desc: DESC_INPUT.value,
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/api/addRecord`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newRecord)
+        });
+
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+
+        loadedEntries.unshift(newRecord);
+        alert("Pomyślnie zapisano nową transakcję.");
+    }
+    catch (error) {
+        console.error("Błąd przy zapisie nowej transakcji.", error);
+        alert("Błąd przy zapisie nowej transakcji.")
+    }
+}
+
+const presentRecords = () => {
     let builder = ""
-    for (record of records) {
+    for (record of loadedEntries) {
         builder += 
             `<div class="entry ${record.value > 0 ? "green" : "red"}">
                 <p class="entry-date">${formatDate(record.date)}</p>
@@ -65,12 +109,15 @@ const formatDate = (date) => {
     return `${year}-${month}-${day}`;
 }
 
-const fetchEntries = async (userId, page) => {
+const fetchEntries = async () => {
+    if (currentPage > (totalPages || 1)) {
+        return;
+    }
     try {
-        const response = await fetch(`${API_URL}?userId=${userId}&page=${page}`, {
-            method: 'GET',
+        const response = await fetch(`${API_URL}/api/get-trasnactions?userId=${USER_ID}&page=${currentPage}`, {
+            method: "GET",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json"
             },
         });
 
@@ -80,28 +127,30 @@ const fetchEntries = async (userId, page) => {
         }
 
         const data = await response.json();
-        presentRecords(data.records);
-    } catch (error) {
+        loadedEntries = loadedEntries.concat(data.records);
+        totalPages = data.totalPages;
+        ++currentPage;
+    } 
+    catch (error) {
         console.error("Błąd wczytywania historii transakcji", error);
         alert("Błąd wczytywania historii transakcji")
     }
 }
 
-const demo = () => {
-    const records = [];
-    for (let i = 0; i < 10; i++) {
-        records.push(
-            {
-                id: i,
-                desc: i + "th record",
-                value: (i % 2 == 0 ? 1 : -1) * Math.random() * 100,
-                date: Date.now()
-            }
-        )
-    }
-    presentRecords(records);
+const loadMoreContent = async () => {
+    await fetchEntries();
+    presentRecords();
 }
 
-demo();
+const observer = new IntersectionObserver((entries) => {
+    const firstEntry = entries[0];
+    if (firstEntry.isIntersecting) {
+        loadMoreContent();
+    }
+}, {
+    threshold: 0.1,
+});
 
-getPermisionAndRegisterUser();
+if (SCROLL_TRIGGER) {
+    observer.observe(SCROLL_TRIGGER);
+}
