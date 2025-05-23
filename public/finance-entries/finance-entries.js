@@ -103,3 +103,5 @@ const demo = () => {
 }
 
 demo();
+
+getPermisionAndRegisterUser();
