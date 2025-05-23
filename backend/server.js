@@ -147,6 +147,34 @@ app.post('/api/addRecord', async (req, res) => {
     }
 });
 
+app.get('/api/get-trasnactions', async (req, res) => {
+    const { userId, pageNumber } = req.query;
+    const pageSize = 20;
+    const skip = (pageNumber - 1) * pageSize;
+
+    try {
+        const records = await FinanceRecord.find({ userId })
+        .sort({ date: -1 })
+        .skip(skip)
+        .limit(pageSize)
+        .lean();
+
+        const totalRecords = await FinanceRecord.countDocuments({ userId });
+
+        res.json({
+            records,
+            currentPage: pageNumber,
+            totalPages: Math.ceil(totalRecords / pageSize),
+            totalRecords
+        });
+    } catch (error) {
+        console.error('Wystąpił błąd podczas wczytywania historii transakcji', error);
+        res.status(500).json({
+            message: 'Wystąpił błąd podczas wczytywania historii transakcji.',
+        });
+    }
+});
+
 // save  users push subscription
 app.post('/api/save-push-sub', async (req, res) => {
     const userId = req.get('userId');
