@@ -125,7 +125,7 @@ const presentSummary = (recordsToShow) => {
         builder += `<div class="entry ${record.value > 0 ? "green" : "red"}">
                 <p class="entry-date">${formatDate(record.date)}</p>
                 <div class="entry-details">
-                    <h2>${record.value.toFixed(2)}</h2>
+                    <h2 >${record.value.toFixed(2)}</h2>
                     <span>${record.desc}</span>
                 </div>
             </div>`;
@@ -139,9 +139,13 @@ const presentSummary = (recordsToShow) => {
                     
                 </div>
             </div>`;
+
+        sumabuilder = `<div >Suma : 0.00</div>`
+    } else {
+        sumabuilder = `<div class="${totalAmount > 0 ? "green" : "red"}">Suma : ${totalAmount.toFixed(2)}</div>`
     }
     summaryList.innerHTML = builder;
-    summaryTotal.innerHTML = `Suma : ${totalAmount.toFixed(2)}`;
+    summaryTotal.innerHTML = sumabuilder;
 };
 
 const handleWeekClick = () => {

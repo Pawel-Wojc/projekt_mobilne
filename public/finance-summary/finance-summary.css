@@ -2,8 +2,8 @@
 :root {
     --primary-color: #4361ee;
     --income-color: #4cc9f0;
-    --expense-color: #f72585;
-    --active-color: #a41455;
+    --expense-color: #5b37bd;
+    --active-color: #3e2d64;
     --background-color: #f8f9fa;
     --text-color: #212529;
     --light-gray: #e9ecef;
@@ -18,6 +18,16 @@
     box-sizing: border-box;
 }
 
+.green {
+    color: green;
+}
+.red {
+    color: red;
+}
+
+#left, #right {
+    background-color: #3e2d64;
+}
 
 #entry-history-container {
 
@@ -39,7 +49,7 @@
     font-size: 2rem;
     font-weight: 600;
     color: var(--text-color);
-    margin-bottom: 1rem;
+   
 }
 
 body {
@@ -65,7 +75,7 @@ header {
 header h1 {
     margin: 0;
     font-size: clamp(1.8rem, 5vw, 2.5rem);
-    color: var(--primary-color);
+    color: var(--text-color);
     font-weight: 600;
     letter-spacing: -0.5px;
 }
@@ -81,25 +91,7 @@ main {
     padding: 0 1rem;
 }
 
-/* New Entry Form */
-#range-change-container {
-    background-color: var(--white);
-    border-radius: var(--border-radius);
-    padding: 1.5rem;
-    box-shadow: var(--box-shadow);
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
-    
-}
 
-#range-change-container .row {
-    display: flex;
-    width: 100%;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-    align-items: center;
-}
 
 .row {
     display: flex;
@@ -153,12 +145,7 @@ button:hover {
     margin: 0 auto;
 }
 
-#summary-navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
+
 
 .row {
     display: flex;
@@ -293,4 +280,98 @@ button:hover {
   .entry-value {
     font-size: 0.95rem;
   }
+}
+
+
+#range-change-container {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#range-change-container .row {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    align-items: center;
+    flex-wrap: wrap; /* pozwala na zawijanie przycisków na małych ekranach */
+}
+
+#range-change-container .button {
+    flex: 1; /* przyciski równo rozłożone */
+    min-width: 80px; /* minimalna szerokość przycisku */
+    padding: 0.5rem;
+    text-align: center;
+    
+    white-space: nowrap; /* zapobiega zawijaniu tekstu w przyciskach */
+}
+
+#summary-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+#summary-navigation button {
+    padding: 0.5rem 1rem;
+    min-width: 40px;
+}
+
+#date {
+    min-width: 120px;
+    text-align: center;
+}
+
+#summary-total {
+    text-align: center;
+    font-weight: bold;
+    padding: 0.5rem;
+}
+
+/* Responsywność - dostosowanie na mniejszych ekranach */
+@media (max-width: 480px) {
+    #range-change-container {
+        padding: 0.75rem;
+    }
+    
+    #range-change-container .row {
+        gap: 0.25rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    #range-change-container .button {
+        font-size: 0.85rem;
+        padding: 0.4rem;
+    }
+    
+    #summary-navigation {
+        gap: 0.5rem;
+    }
+    
+    #summary-navigation button {
+        padding: 0.4rem 0.8rem;
+    }
+    
+    #date {
+        min-width: 100px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 360px) {
+    #range-change-container .button {
+        min-width: 70px;
+        font-size: 0.8rem;
+    }
+    
+    #date {
+        min-width: 80px;
+    }
 }
