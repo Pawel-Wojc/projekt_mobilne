@@ -2,7 +2,7 @@
 :root {
   --primary-color: #4361ee;
   --income-color: #4cc9f0;
-  --expense-color: #f72585;
+--expense-color: #5b37bd;
   --background-color: #f8f9fa;
   --text-color: #212529;
   --light-gray: #e9ecef;
@@ -11,6 +11,11 @@
   --white: #ffffff;
   --border-radius: 8px;
   --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
 }
 
 * {

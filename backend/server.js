@@ -7,11 +7,12 @@ const crypto = require('crypto');
 const webPush = require('web-push');
 const app = express();
 const PORT = 3000;
+const schedule = require('node-schedule');
 
 app.use(cors());
 
 // read config
-const CONFIG = require('./config.json');
+const CONFIG = require('../config.json');
 
 // Połączenie z bazą danych MongoDB
 mongoose.connect(CONFIG.mongoDB, {
@@ -208,23 +209,31 @@ app.post('/api/save-push-sub', async (req, res) => {
     }
 });
 
-app.get('/send/push', async(req, res) =>{
-    const userId = '6828bb643b7ac99f5ff4a338';
-    let pushSub = await PushSubscription.findOne({userId}); 
-    const pushSubscription = pushSub.subscription;
-    webPush.setVapidDetails(
-    'https://yourdomain.org',  // Using a URL instead of mailto
-    CONFIG.VAPID_public_key,
-    CONFIG.VAPID_private_key
-    );
-    const payload = JSON.stringify({ title: 'Hello!', body: 'Hello, world!' });
-    webPush.sendNotification(pushSubscription, payload)
-    .then(result => console.log('Push sent:', result))
-    .catch(err => console.error('Error sending push:', err));
-});
+const sendPush = async () => {
+    const pushSubs = await PushSubscription.find({});
+    console.log(pushSubs);
+    pushSubs.forEach(sub => {
+        const pushSubscription = sub.subscription;
+
+        webPush.setVapidDetails(
+        'https://yourdomain.org',  // Using a URL instead of mailto
+        CONFIG.VAPID_public_key,
+        CONFIG.VAPID_private_key
+        );
+
+        const payload = JSON.stringify({ title: 'Dobranoc', body: 'Dobranoc!' });
+
+        webPush.sendNotification(pushSubscription, payload)
+        .then(result => console.log('Push sent:', result))
+        .catch(err => console.error('Error sending push:', err));
+    });
+};
+
+const eveningJob = schedule.scheduleJob('0 19 * * *', sendPush);
 
 // Start serwera
 app.listen(PORT, () => {
     // console.log(`process.env.PORT: ${process.env.PORT}`);
     console.log(`Serwer nasłuchuje na porcie ${PORT}.`);
+    sendPush()
 });

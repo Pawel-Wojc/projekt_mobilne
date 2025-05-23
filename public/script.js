@@ -44,7 +44,7 @@ const loginUser = async () => {
         const data = await response.json();
         console.log('response', data);
         localStorage.setItem('myKey', data.message);
-        getPermisionAndRegisterUser();
+
         window.location.href = '../finance-entries/finance-entries.html';
     } catch (error) {
         console.error('Błąd podczas logowania użytkownika:', error);

@@ -9,7 +9,7 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         />
-        <link rel="manifest" href="/../manifest.json" />
+        <link rel="manifest" href="../manifest.json" />
         <style>
             body {
                 display: none;
@@ -24,7 +24,10 @@
                 document.body.style.display = 'block';
             }
         </script>
-        <a href="../finance-entries/finance-entries.html">Dodaj nowe</a>
+        <button style="color: #4361ee; background-color: #4361ee;">
+        <a style="color: white" href="../finance-entries/finance-entries.html">Dodaj nowe</a>    
+        </button>
+        
         <header>
             <h1>Analiza finansów</h1>
         </header>
@@ -57,8 +60,6 @@
                         Rocznie
                     </button>
                 </div>
-            </section>
-            <section id="summary-container">
                 <div id="summary-navigation">
                     <button id="left" onclick="handleDateBack()">&lt;</button>
                     <div id="date">Data</div>
@@ -66,9 +67,9 @@
                         &gt;
                     </button>
                 </div>
-                <div id="summary-total">Suma : -200</div>
-                <div id="summary-list"></div>
+                <div id="summary-total"></div>
             </section>
+            <section id="entry-history-container"></section>
         </main>
         <script src="./finance-summary.js"></script>
     </body>
